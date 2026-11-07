@@ -83,6 +83,9 @@ public class Maleta {
 	 * @throws IllegalStateException cuando la maleta todavía no ha sido recogida
 	 */
 	public LocalDateTime getFechaHoraRecogida() {
+		if (!this.isRecogida()) {
+			throw new IllegalStateException("La maleta todavía no ha sido recogida.");
+		}
 		return this.fechaHoraRecogida;
 	}
 	
