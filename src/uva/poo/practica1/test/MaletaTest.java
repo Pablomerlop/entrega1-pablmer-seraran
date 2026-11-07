@@ -14,16 +14,17 @@ import uva.poo.practica1.Maleta;
  * @author seraran
  */
 public class MaletaTest {
+
 	private static final double DELTA = 0.0001;
 	private Maleta maleta;
 	private LocalDateTime fechaRecogida;
-	
+
 	@Before
 	public void setUp() {
 		maleta = new Maleta(20.5, "55x40x20");
 		fechaRecogida = LocalDateTime.of(2026, 10, 20, 14, 30);
 	}
-	
+
 	@Test
 	public void testInicializacionValida() {
 		assertEquals(20.5, maleta.getPeso(), DELTA);
@@ -35,9 +36,15 @@ public class MaletaTest {
 
 	@Test
 	public void testInicializacionValidaAVLInfPeso() {
-		Maleta maletaLigera = new Maleta(0.001, "  10x10x10  ");
+		Maleta maletaLigera = new Maleta(0.001, "10x10x10");
 		assertEquals(0.001, maletaLigera.getPeso(), DELTA);
 		assertEquals("10x10x10", maletaLigera.getDimensiones());
+	}
+
+	@Test
+	public void testInicializacionValidaRecortaEspaciosDimensiones() {
+		Maleta maletaConEspacios = new Maleta(12.0, "  40x30x20  ");
+		assertEquals("40x30x20", maletaConEspacios.getDimensiones());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -75,6 +82,12 @@ public class MaletaTest {
 		maleta.registrarRecogida(fechaRecogida);
 		assertTrue(maleta.isRecogida());
 		assertEquals(fechaRecogida, maleta.getFechaHoraRecogida());
+	}
+
+	@Test
+	public void testToStringTrasRegistrarRecogida() {
+		maleta.registrarRecogida(fechaRecogida);
+		assertTrue(maleta.toString().contains("true"));
 	}
 
 	@Test(expected = IllegalStateException.class)
