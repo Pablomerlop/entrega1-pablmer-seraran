@@ -6,6 +6,7 @@ public class Maleta {
 	private double peso;
 	private String dimensiones;
 	private LocalDateTime fechaHoraRecogida;
+	private boolean facturada;
 	
 	public Maleta(double peso, String dimensiones) {
 		if (peso <= 0) {
@@ -16,8 +17,9 @@ public class Maleta {
 		}
 		
 		this.peso = peso;
-		this.dimensiones = dimensiones;
+		this.dimensiones = dimensiones.trim();
 		this.fechaHoraRecogida = null;
+		this.facturada = false;
 	}
 	
 	public double getPeso() {
@@ -26,6 +28,21 @@ public class Maleta {
 	
 	public String getDimensiones() {
 		return dimensiones;
+	}
+	
+	public boolean isFacturada() {
+		return this.facturada;
+	}
+	
+	public boolean isRecogida() {
+		return this.fechaHoraRecogida != null;
+	}
+
+	void marcarFacturada() {
+		if (this.facturada) {
+			throw new IllegalStateException("La maleta ya ha sido facturada.");
+		}
+		this.facturada = true;
 	}
 	
 	public LocalDateTime getFechaHoraRecogida() {
@@ -43,7 +60,9 @@ public class Maleta {
 		this.fechaHoraRecogida = fechaHora;
 	}
 	
-	public boolean isRecogida() {
-		return this.fechaHoraRecogida != null;
+	@Override
+	public String toString() {
+		return "Maleta [peso=" + this.peso + " kg, dimensiones=" + this.dimensiones
+				+ ", facturada=" + this.facturada + ", recogida=" + isRecogida() + "]";
 	}
 }

@@ -6,7 +6,7 @@ public class Avion implements Identificable {
 	private int plazasPrimera;
 	private int plazasBusiness;
 	private int plazasTurista;
-	private int plazasTotales;
+	private int capacidadMaximaPasajeros;
 	private int maxMaletas;
 	private double equipajeMaxKg;
 	
@@ -31,14 +31,14 @@ public class Avion implements Identificable {
 			throw new IllegalArgumentException("El número máximo de maletas no puede ser negativo.");
 		}
 		
-		this.matricula = matricula;
-		this.modelo = modelo;
+		this.matricula = matricula.trim();
+		this.modelo = modelo.trim();
 		this.plazasPrimera = plazasPrimera;
 		this.plazasBusiness = plazasBusiness;
 		this.plazasTurista = plazasTurista;
+		this.capacidadMaximaPasajeros = plazasPrimera + plazasBusiness + plazasTurista;
 		this.equipajeMaxKg = equipajeMaxKg;
 		this.maxMaletas = maxMaletas;
-		plazasTotales = plazasPrimera + plazasBusiness + plazasTurista;
 	}
 	
 	@Override
@@ -75,7 +75,11 @@ public class Avion implements Identificable {
 	}
 	
 	public int getPlazasTotales() {
-		return this.plazasTotales;
+		return this.plazasPrimera + this.plazasBusiness + this.plazasTurista;
+	}
+	
+	public int getCapacidadMaximaPasajeros() {
+		return this.capacidadMaximaPasajeros;
 	}
 	
 	public double getEquipajeMaxKg() {
@@ -96,12 +100,38 @@ public class Avion implements Identificable {
 		}
 		
 		int nuevoTotal = nuevasPrimera + nuevasBusiness + nuevasTurista;
-		if (nuevoTotal > this.plazasTotales) {
+		if (nuevoTotal <= 0) {
+			throw new IllegalArgumentException("El avión debe mantener al menos una plaza operativa.");
+		}
+		if (nuevoTotal > this.capacidadMaximaPasajeros) {
 			throw new IllegalArgumentException("La nueva distribución supera el máximo de plazas del avión.");
 		}
 		
 		this.plazasPrimera = nuevasPrimera;
 		this.plazasBusiness = nuevasBusiness;
 		this.plazasTurista = nuevasTurista;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Avion otro = (Avion) obj;
+		return this.matricula.equals(otro.matricula);
+	}
+
+	@Override
+	public int hashCode() {
+		return 31 + this.matricula.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "Avion [matricula=" + this.matricula + ", modelo=" + this.modelo
+				+ ", plazasActuales=" + getPlazasTotales() + "/" + this.capacidadMaximaPasajeros + "]";
 	}
 }
