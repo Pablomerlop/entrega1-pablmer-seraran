@@ -124,10 +124,20 @@ public class Viajero implements Identificable {
 		this.tarjetaEmbarque = tarjeta;
 	}
 
+	/**
+	 * Consulta el vuelo al que está asignado el viajero.
+	 * 
+	 * @return vuelo asignado o null si no tiene vuelo
+	 */
 	Vuelo getVueloAsignado() {
 		return this.vueloAsignado;
 	}
 
+	/**
+	 * Establece el vuelo asignado al viajero.
+	 * 
+	 * @param vuelo vuelo al que se asigna el viajero
+	 */
 	void setVueloAsignado(Vuelo vuelo) {
 		this.vueloAsignado = vuelo;
 	}

@@ -63,6 +63,9 @@ public class Maleta {
 		return this.facturada;
 	}
 	
+	/**
+	 * Marca la maleta como facturada.
+	 */
 	void marcarFacturada() {
 		this.facturada = true;
 	}

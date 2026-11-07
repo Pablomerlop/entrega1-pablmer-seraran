@@ -342,6 +342,14 @@ public class Vuelo implements Identificable {
 		return pesoTotal;
 	}
 
+	/**
+	 * Comprueba si la bodega del avión admite los bultos y el peso adicionales indicados.
+	 * 
+	 * @param bultosExtra número de maletas adicionales a verificar
+	 * @param pesoExtra peso adicional en kilogramos a verificar
+	 * @throws IllegalStateException cuando el vuelo está cancelado, ya ha despegado
+	 * o se supera la capacidad máxima de maletas o de peso del avión
+	 */
 	void validarCapacidadEquipajeExtra(int bultosExtra, double pesoExtra) {
 		if (this.cancelado) {
 			throw new IllegalStateException("El vuelo está cancelado.");

@@ -77,7 +77,10 @@ public class CintaRecogida implements Identificable {
 	 */
 	public double getCapacidadLibre() {
 		double libre = this.capacidadMaxima - getPesoAcumulado();
-		return libre < 0.0 ? 0.0 : libre;
+		if (libre < 0.0) {
+			return 0.0;
+		}
+		return libre;
 	}
 	
 	/**
